@@ -50,19 +50,18 @@ context = zmq.Context()
 footage_socket = context.socket(zmq.PUB)
 footage_socket.connect('tcp://{}:{}'.format(args["ip"], args["port"]))
 
+print("streaming started")
 while True:
     try:
         grabbed, frame = camera.read()  # grab the current frame
-        #frame = cv2.resize(frame, (640, 480))  # resize the frame
+
+        # debugging
+        #print(grabbed, end=" ")
+
         encoded, buffer = cv2.imencode('.jpg', frame)
-        # jpg_as_text = base64.b64encode(buffer)
         footage_socket.send(buffer)
 
     except KeyboardInterrupt:
         camera.release()
         cv2.destroyAllWindows()
         break
-
-if __name__ == "__main__":
-     print(args["num_camera"])
-     brute_check(args["num_camera"])
