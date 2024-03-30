@@ -5,6 +5,17 @@ import argparse
 
 camera = []
 
+ap = argparse.ArgumentParser()
+ap.add_argument("-p", "--port", type=int, default=5555,
+                help="port number")
+ap.add_argument("-i", "--ip", type=str,
+                help="ip address")
+ap.add_argument("-nc", "--num_camera", type=int, default=1,
+                help="camera number")
+
+args = vars(ap.parse_args())
+print(args)
+
 def brute_check(nc):
         """ 
             Iterates over video ports brutishly
@@ -30,4 +41,5 @@ def brute_check(nc):
 
 
 if __name__ == "__main__":
-     brute_check(1)
+     print(args["num_camera"])
+     brute_check(args["num_camera"])
